@@ -25,8 +25,29 @@ export default function ContactForm() {
     setSubmitStatus('idle');
     
     try {
-      // EmailJS 통합은 다음 단계에서 구현
-      console.log('Form data:', data);
+      // EmailJS 환경 변수 확인
+      const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const emailjsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+      
+      if (emailjsServiceId && emailjsTemplateId && emailjsPublicKey) {
+        // EmailJS가 설정된 경우 실제 이메일 전송
+        console.log('EmailJS configured, sending email...');
+        // TODO: EmailJS 통합 구현
+        // const result = await emailjs.send(
+        //   emailjsServiceId,
+        //   emailjsTemplateId,
+        //   {
+        //     from_name: data.name,
+        //     from_email: data.email,
+        //     message: data.message,
+        //   },
+        //   emailjsPublicKey
+        // );
+      } else {
+        // EmailJS가 설정되지 않은 경우 콘솔에 출력
+        console.log('EmailJS not configured, form data:', data);
+      }
       
       // 성공 시뮬레이션 (2초 대기)
       await new Promise(resolve => setTimeout(resolve, 2000));
